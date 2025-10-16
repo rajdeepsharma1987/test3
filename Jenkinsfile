@@ -1,26 +1,27 @@
+
 pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/rajdeepsharma1987/test3.git'
-            }
-        }
-        stage('Validate Files') {
-            steps {
-                echo '✅ Checking HTML, CSS, and JS files...'
-                bat 'dir'  // instead of sh 'ls'
-            }
-        }
-        stage('Archive Website') {
-            steps {
-                bat 'echo Archiving site...'
-            }
-        }
+  agent any
+
+  stages {
+    stage('Checkout Code') {
+      steps {
+        git branch: 'main', url: 'https://github.com/rajdeepsharma1987/test3.git'
+      }
     }
-    post {
-        failure {
-            echo '❌ Build failed. Please check console logs.'
-        }
+
+    stage('Build') {
+      steps {
+        echo 'Static website hai — build ki zarurat nahi.'
+      }
     }
+
+    stage('Run Website') {
+      steps {
+        echo 'Starting local web server...'
+        // simple python server for local run
+        bat 'python -m http.server 8081'
+      }
+    }
+  }
 }
+    
